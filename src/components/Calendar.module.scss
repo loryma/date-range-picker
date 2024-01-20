@@ -1,0 +1,44 @@
+.wrapper {
+  border: 1px solid #e5e5ea;
+  padding: 12px 0;
+  height: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  max-width: 264px;
+  padding: 4px 15px 12px 15px;
+}
+
+.day {
+  border: 1px solid #000;
+  padding: 2px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.dayInRange {
+  background-color: #cce9ff;
+}
+
+.startOrEndDay {
+  background-color: #3498ff;
+  color: white;
+}
+
+.dayFromPreviousMonth {
+  border: none;
+  cursor: initial;
+}
+
+.disabledDay {
+  color: #c5c6c7;
+  cursor: initial;
+}
+
+.today {
+  border: 2px solid #3498ff;
+}
