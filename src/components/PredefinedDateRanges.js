@@ -16,7 +16,7 @@ export default function PredefinedDateRanges({ ranges, setStartDate, setEndDate 
     <div className={styles.wrapper}>
       {ranges.map(({ value, label }) => {
         return (
-          <div className={styles.range} onClick={() => onClick(value)}>
+          <div key={label} className={styles.range} onClick={() => onClick(value)}>
             {label}
           </div>
         )
