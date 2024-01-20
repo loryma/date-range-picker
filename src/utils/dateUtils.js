@@ -49,7 +49,7 @@ export const generateDaysArray = ({ year, month }) => {
   const firstDayOfMonthWeekDay = new Date(+year, +month, 1).getDay();
   //prepend white spaces for days of the previous month
   let days = [...[...Array(firstDayOfMonthWeekDay).keys()].map(i => " ")];
-  console.log('dd', days);
+
   days
     .push(...[...Array(daysInMonth).keys()]
     .map(i => i + 1))
