@@ -3,10 +3,32 @@
   flex-wrap: wrap;
 }
 .container {
+  max-width: 528px;
   background-color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 210px auto;
+  grid-template-areas: 
+    "chosen-dates chosen-dates"
+    "calendar-left calendar-right"
+    "predefined-range predefined-range";
+  
 }
 
 .chosenDates {
   font-size: 12px;
   padding: 8px 12px;
+  grid-area: chosen-dates;
+}
+
+.calendarLeft {
+  grid-area: calendar-left;
+}
+
+.calendarRight {
+  grid-area: calendar-right;
+}
+
+.predefinedRange {
+  grid-area: predefined-range;
 }

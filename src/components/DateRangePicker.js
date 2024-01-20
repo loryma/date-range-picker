@@ -96,36 +96,34 @@ const DateRangePicker = ({ onRangeChoice, predefinedDateRanges }) => {
 
 
   return (
-    <div>
-      <div className={styles.container}>
-        <div className={styles.chosenDates}>
-          {startDate && endDate 
-            ? <p>{generateDateString(startDate)} ~ {generateDateString(endDate)}</p> 
-            : <p>yyyy-MM-dd ~ yyyy-MM-dd</p>
-          }
-        </div>
-        <div className={styles.calendarsWrapper}>
-          <div>
-            <Calendar
-              onSetDate={onSetDate} 
-              yearAndMonth={leftCalendarYearAndMonth}
-              startDate={startDate}
-              endDate={endDate}
-              onMonthChange={onMonthChange} 
-              calendarLocation={CALENDARS.LEFT}
-            />
-          </div>
-          <div>
-            <Calendar 
-              onSetDate={onSetDate} 
-              yearAndMonth={rightCalendarYearAndMonth}
-              startDate={startDate}
-              endDate={endDate} 
-              onMonthChange={onMonthChange}
-              calendarLocation={CALENDARS.RIGHT}
-            />
-          </div>
-        </div>
+    <div className={styles.container}>
+      <div className={styles.chosenDates}>
+        {startDate && endDate 
+          ? <p>{generateDateString(startDate)} ~ {generateDateString(endDate)}</p> 
+          : <p>yyyy-MM-dd ~ yyyy-MM-dd</p>
+        }
+      </div>
+      <div className={styles.calendarLeft}>
+        <Calendar
+          onSetDate={onSetDate} 
+          yearAndMonth={leftCalendarYearAndMonth}
+          startDate={startDate}
+          endDate={endDate}
+          onMonthChange={onMonthChange} 
+          calendarLocation={CALENDARS.LEFT}
+        />
+      </div>
+      <div className={styles.calendarRight}>
+        <Calendar 
+          onSetDate={onSetDate} 
+          yearAndMonth={rightCalendarYearAndMonth}
+          startDate={startDate}
+          endDate={endDate} 
+          onMonthChange={onMonthChange}
+          calendarLocation={CALENDARS.RIGHT}
+        />
+      </div>
+      <div className={styles.predefinedRange}>
         <PredefinedDateRanges 
           ranges={predefinedDateRanges}
           setStartDate={setStartDate}
