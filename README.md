@@ -1,6 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Date range picker
 
-## Getting Started
+# Deployed at [https://rococo-muffin-3ba3f4.netlify.app](https://rococo-muffin-3ba3f4.netlify.app).
+
+#### Getting Started
 
 First, run the development server:
 
