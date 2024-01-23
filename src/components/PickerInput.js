@@ -10,9 +10,8 @@ export default function PickerInput({ inputValue, onToggle }) {
   }, [onToggle]);
 
   return (
-    <div className={styles.inputWrapper}>
-      <input 
-        onClick={onClick} 
+    <div className={styles.inputWrapper} onClick={onClick}>
+      <input  
         value={inputValue} 
         readOnly
         placeholder={STRINGS.RANGE_PLACEHOLDER}
