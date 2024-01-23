@@ -3,7 +3,7 @@ import {
   generateDateString,
   generateWeekendsArray 
 } from '../utils/dateUtils';
-import styles from './DateRangePicker.module.scss';
+import styles from './DaterangePicker.module.scss';
 import DateRangePopup from './DateRangePopup';
 import PickerInput from './PickerInput';
 
