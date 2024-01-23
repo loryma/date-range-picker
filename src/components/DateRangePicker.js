@@ -54,7 +54,7 @@ export default function DateRangeInput({ onRangeChoice, predefinedDateRanges }) 
       return;
     }
     
-  }, [setInputValue, startDate, endDate, setIsOpen]);
+  }, [setInputValue, startDate, endDate, setIsOpen, onRangeChoice]);
   
   return (
     <div 

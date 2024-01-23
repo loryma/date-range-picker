@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import styles from './PickerInput.module.scss';
 import { STRINGS } from '../utils/dateUtils';
 
-export default function({ inputValue, onToggle }) {
+export default function PickerInput({ inputValue, onToggle }) {
    
   const onClick = useCallback((e) => {
     e.stopPropagation();
