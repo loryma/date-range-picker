@@ -68,8 +68,12 @@ export const convertDateToYearMonthDay = (date) => {
   return { year: date.getFullYear(), month: date.getMonth(), day: date.getDate() };
 };
 
-export const generateDateString = ({ year, month, day}) => 
-  `${year}-${month}-${day}`; 
+export const generateDateString = ({ year, month, day}) => {
+  const zeroPaddedMonth = `0${month+1}`.slice(-2);
+  const zeroPaddedDay = `0${day}`.slice(-2);
+
+  return `${year}-${zeroPaddedMonth}-${zeroPaddedDay}`;
+}; 
 
 export const generateWeekendsArray = (startDate, endDate) => {
   let start = new Date(...Object.values(startDate));
