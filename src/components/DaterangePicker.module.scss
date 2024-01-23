@@ -1,34 +1,11 @@
-.calendarsWrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
-.container {
-  max-width: 528px;
-  background-color: white;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 210px auto;
-  grid-template-areas: 
-    "chosen-dates chosen-dates"
-    "calendar-left calendar-right"
-    "predefined-range predefined-range";
-  
+.wrapper {
+  position: relative;
+  display: inline-block;
 }
 
-.chosenDates {
-  font-size: 12px;
-  padding: 8px 12px;
-  grid-area: chosen-dates;
-}
-
-.calendarLeft {
-  grid-area: calendar-left;
-}
-
-.calendarRight {
-  grid-area: calendar-right;
-}
-
-.predefinedRange {
-  grid-area: predefined-range;
+.popupContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12), 0 0 10px rgba(0, 0, 0, 0.06);
 }

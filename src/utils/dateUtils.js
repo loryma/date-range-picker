@@ -1,4 +1,8 @@
 
+export const STRINGS = {
+  RANGE_PLACEHOLDER: 'yyyy-MM-dd ~ yyyy-MM-dd',
+};
+
 export const CALENDARS = {
   LEFT: 'left',
   RIGHT: 'right'

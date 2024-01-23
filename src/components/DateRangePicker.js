@@ -1,137 +1,83 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import Calendar from './Calendar';
-import styles from './DaterangePicker.module.scss';
+import { useCallback, useState, useRef, useEffect } from "react";
 import { 
-  getYearAndMonthFromDateObject, 
-  getNextMonth,
-  getPreviousMonth,
-  CALENDARS,
   generateDateString,
   generateWeekendsArray 
 } from '../utils/dateUtils';
-import PredefinedDateRanges from './PredefinedDateRanges';
+import styles from './DateRangePicker.module.scss';
+import DateRangePopup from './DateRangePopup';
+import PickerInput from './PickerInput';
 
-const DateRangePicker = ({ onRangeChoice, predefinedDateRanges }) => {
+function useClickOutside(ref, onClickOutside) {
+  useEffect(() => {
+    function handleClickOutside(event) {
+      console.log('handle click', ref.current, event.target, ref.current.contains(event.target));
+      if (ref.current && !ref.current.contains(event.target)) {
+        onClickOutside(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, onClickOutside]);
+}
+
+export default function DateRangeInput({ onRangeChoice, predefinedDateRanges }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const rangePickerRef = useRef();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [leftCalendarYearAndMonth, setLeftCalendarYearAndMonth] = useState(getYearAndMonthFromDateObject(new Date()));
-  const [rightCalendarYearAndMonth, setRightCalendarYearAndMonth] = useState(getNextMonth(getYearAndMonthFromDateObject(new Date())));
+  const [inputValue, setInputValue] = useState('');
 
-  const onSetDate = useCallback((date) => {
-    const startDateObject = startDate && new Date(...Object.values(startDate));
-    const endDateObject = endDate && new Date(...Object.values(startDate));
-    const chosenDateObject = new Date(...Object.values(date));
-
-    if (!startDate) {
-      setStartDate(date);
+  const onToggle = useCallback((open) => {
+    if (open) {
+      setIsOpen(true);
       return;
     }
+    setIsOpen(false);
+  }, [setIsOpen]);
 
-    if (startDate) {
-      if (!endDate && chosenDateObject > startDateObject) {
-        setEndDate(date);
-        return;
-      }
-      if (!endDate && chosenDateObject < startDateObject) {
-        setEndDate(startDate);
-        setStartDate(date);
-        return;        
-      }
+  useClickOutside(rangePickerRef, onToggle);
 
-      if (+startDateObject === +chosenDateObject && +chosenDateObject === +endDateObject) {
-        setEndDate(null);
-        return;
-      }
-
-      if (+startDateObject === +chosenDateObject) {
-        setEndDate(date);
-        return;
-      }
-
-      if (endDate) {
-        setEndDate(null);
-        setStartDate(date);
-      }
-    }
-    
-  }, [setStartDate, setEndDate, startDate, endDate]);
-
-  const onMonthChange = useCallback((yearAndMonth, calendar) => {
-    if (calendar == CALENDARS.LEFT) {
-      setLeftCalendarYearAndMonth(yearAndMonth);
-      //make sure left calendar always shows at least one month yearlier then right calendar
-      const { year, month } = rightCalendarYearAndMonth;
-      if (yearAndMonth.year === year && yearAndMonth.month == month) {
-        setRightCalendarYearAndMonth(getNextMonth(yearAndMonth));
-      }
-
-    } else {
-      setRightCalendarYearAndMonth(yearAndMonth);
-
-      const { year, month} = leftCalendarYearAndMonth;
-      if (yearAndMonth.year === year && yearAndMonth.month == month) {
-        setLeftCalendarYearAndMonth(getPreviousMonth(yearAndMonth));
-      }
-    }
-  }, [
-    setLeftCalendarYearAndMonth, 
-    setRightCalendarYearAndMonth,
-    leftCalendarYearAndMonth,
-    rightCalendarYearAndMonth
-  ]);
-
-  useEffect(() => {
+  const onFinalChoice = useCallback(() => {
     let result;
 
     if (startDate && endDate) {
+      setInputValue(`${generateDateString(startDate)} ~ ${generateDateString(endDate)}`);
       const startRangeString = generateDateString(startDate);
       const endRangeString = generateDateString(endDate);
       const weekendsArray = generateWeekendsArray(startDate, endDate);
       result = [[ startRangeString, endRangeString ], weekendsArray];
+      onRangeChoice(result);
+      setIsOpen(false);
     } else {
-      result = [];
+      return;
     }
-    onRangeChoice(result);
-  }, [startDate, endDate, onRangeChoice]);
-
-
+    
+  }, [setInputValue, startDate, endDate, setIsOpen]);
+  
   return (
-    <div className={styles.container}>
-      <div className={styles.chosenDates}>
-        {startDate && endDate 
-          ? <p>{generateDateString(startDate)} ~ {generateDateString(endDate)}</p> 
-          : <p>yyyy-MM-dd ~ yyyy-MM-dd</p>
-        }
-      </div>
-      <div className={styles.calendarLeft}>
-        <Calendar
-          onSetDate={onSetDate} 
-          yearAndMonth={leftCalendarYearAndMonth}
-          startDate={startDate}
-          endDate={endDate}
-          onMonthChange={onMonthChange} 
-          calendarLocation={CALENDARS.LEFT}
-        />
-      </div>
-      <div className={styles.calendarRight}>
-        <Calendar 
-          onSetDate={onSetDate} 
-          yearAndMonth={rightCalendarYearAndMonth}
-          startDate={startDate}
-          endDate={endDate} 
-          onMonthChange={onMonthChange}
-          calendarLocation={CALENDARS.RIGHT}
-        />
-      </div>
-      <div className={styles.predefinedRange}>
-        <PredefinedDateRanges 
-          ranges={predefinedDateRanges}
-          setStartDate={setStartDate}
-          setEndDate={setEndDate}
-        />
-      </div>
+    <div 
+      ref={rangePickerRef} 
+      className={styles.wrapper}
+    >
+      <PickerInput 
+        inputValue={inputValue} 
+        isOpen={isOpen} 
+        onToggle={onToggle} 
+      />
+      {isOpen && (
+        <div className={styles.popupContainer}>
+          <DateRangePopup
+            startDate={startDate} 
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            onFinalChoice={onFinalChoice}
+            predefinedDateRanges={predefinedDateRanges}
+          />
+        </div>
+      )}
     </div>
   );
 };
-
-export default DateRangePicker;

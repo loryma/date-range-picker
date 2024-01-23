@@ -1,0 +1,67 @@
+@import './variables.module.scss';
+
+.container {
+  max-width: 2 * $calendar-width;
+  background-color: white;
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 210px auto;
+  grid-template-areas: 
+    "chosen-dates chosen-dates"
+    "calendar-left calendar-right"
+    "predefined-range predefined-range";
+
+    @media (max-width: 490px) {
+      grid-template-areas: 
+        "chosen-dates chosen-dates"
+        "calendar-left calendar-left"
+        "calendar-right calendar-right"
+        "predefined-range predefined-range";
+    }
+}
+
+.chosenDates {
+  font-size: 12px;
+  padding: 8px 12px;
+  grid-area: chosen-dates;
+}
+
+.calendarLeft {
+  grid-area: calendar-left;
+}
+
+.calendarRight {
+  grid-area: calendar-right;
+}
+
+.predefinedRange {
+  grid-area: predefined-range;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+}
+
+.saveChosenRange {
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid $primary-blue;
+  font-size: 14px;
+  background-color: $primary-blue;
+  color: white;
+  cursor: pointer;
+  &.disabled {
+    opacity: 0.3;
+  }
+}
+
+// @media (min-width: 490px) {
+//   .container {
+//     grid-template-areas: 
+//     "chosen-dates chosen-dates"
+//     "calendar-left calendar-left"
+//     "calendar-right calendar-right"
+//     "predefined-range predefined-range";
+//   }
+// }
+
