@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import Calendar from './Calendar';
-import styles from './DaterangePopup.module.scss';
+import styles from './DateRangePopup.module.scss';
 import { 
   getYearAndMonthFromDateObject, 
   getNextMonth,
